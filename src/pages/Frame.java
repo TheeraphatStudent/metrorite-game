@@ -16,6 +16,7 @@ public class Frame extends JFrame {
         this.setTitle("Meteorite Game");
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         this.setSize(new Dimension(WIDTH, HEIGHT));
+        this.setMinimumSize(new Dimension(WIDTH, HEIGHT));
 
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(new Configs().primary());

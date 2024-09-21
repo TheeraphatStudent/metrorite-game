@@ -1,1 +1,4 @@
 *.pdf
+
+bin/pages/Frame.class
+bin/pages/MeteoriteZone.class

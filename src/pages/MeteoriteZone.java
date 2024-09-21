@@ -1,11 +1,21 @@
 package pages;
 
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JPanel;
 import components.CreateMeteorite;
+import components.MeteoriteThread;
 
-public class MeteoriteZone extends JPanel {
+public class MeteoriteZone extends JPanel implements MouseListener, MouseMotionListener {
     private int meteoriteNumbers = 10;
+
+    private List<MeteoriteThread> meteoriteContain = new ArrayList<>();
 
     public MeteoriteZone(int parentWidth, int parentHeight) {
         this.setLayout(null);
@@ -20,55 +30,53 @@ public class MeteoriteZone extends JPanel {
             meteorite.setBounds(initialX, initialY, meteorite.getWidth(), meteorite.getHeight());
 
             MeteoriteThread meteoriteControl = new MeteoriteThread(meteorite, parentWidth, parentHeight);
+            meteoriteContain.add(meteoriteControl);
+
             meteoriteControl.start();
 
             this.add(meteorite);
         }
 
+        addMouseListener(this);
+        addMouseMotionListener(this);
         repaint();
     }
-}
 
-class MeteoriteThread extends Thread {
-    private JPanel meteoriteRef;
-    private int parentWidth;
-    private int parentHeight;
+    // @Override
+    // public void paint(Graphics g) {
 
-    public MeteoriteThread(JPanel meteorite, int frameWidth, int frameHeight) {
-        this.meteoriteRef = meteorite;
-        this.parentWidth = frameWidth;
-        this.parentHeight = frameHeight;
+    // }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
     }
 
     @Override
-    public void run() {
-        while (true) {
-            try {
-                int width = this.meteoriteRef.getWidth();
-                int height = this.meteoriteRef.getHeight();
+    public void mousePressed(MouseEvent e) {
+    }
 
-                int x = this.meteoriteRef.getX();
-                int y = this.meteoriteRef.getY();
+    @Override
+    public void mouseReleased(MouseEvent e) {
+    }
 
-                // Movement speed
-                x += (int) (Math.random() * 5);
-                y += (int) (Math.random() * 5);
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
 
-                // Wrap around the edges
-                if (x > parentWidth) {
-                    x = -width;
-                }
-                if (y > parentHeight) {
-                    y = -height;
-                }
+    @Override
+    public void mouseExited(MouseEvent e) {
+    }
 
-                this.meteoriteRef.setBounds(x, y, width, height);
-                this.meteoriteRef.repaint();
+    @Override
+    public void mouseDragged(MouseEvent e) {
+    }
 
-                Thread.sleep(10);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        // System.out.println("Mouse Move Work!");
+        // System.out.println(e.getX());
+        // System.out.println(e.getY());
+        // System.err.println();
+
     }
 }
