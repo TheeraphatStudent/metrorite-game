@@ -1,38 +1,48 @@
 package pages;
 
 import java.awt.Dimension;
-import java.awt.Graphics;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.swing.JPanel;
 import components.CreateMeteorite;
 import components.MeteoriteThread;
+import utils.PlaySounds;
 
 public class MeteoriteZone extends JPanel implements MouseListener, MouseMotionListener {
-    private int meteoriteNumbers = 10;
+    // private int meteoriteNumbers = 3;
 
-    private List<MeteoriteThread> meteoriteContain = new ArrayList<>();
+    // private List<MeteoriteThread> meteoriteControls = new ArrayList<>();
+    private List<CreateMeteorite> meteoriteContain = new ArrayList<>();
+    private MeteoriteThread thread;
 
-    public MeteoriteZone(int parentWidth, int parentHeight) {
+    public MeteoriteZone(int parentWidth, int parentHeight, LinkedHashMap<String, Double> globalOption) {
         this.setLayout(null);
         this.setOpaque(false);
         this.setSize(new Dimension(parentWidth, parentHeight));
 
+
+        int meteoriteNumbers = (int) Math.floor(globalOption.get("Meteorites"));
+
         for (int i = 0; i < meteoriteNumbers; i++) {
             CreateMeteorite meteorite = new CreateMeteorite();
+            meteoriteContain.add(meteorite);
 
             int initialX = (int) (Math.random() * (parentWidth - meteorite.getWidth()));
             int initialY = (int) (Math.random() * (parentHeight - meteorite.getHeight()));
             meteorite.setBounds(initialX, initialY, meteorite.getWidth(), meteorite.getHeight());
 
-            MeteoriteThread meteoriteControl = new MeteoriteThread(meteorite, parentWidth, parentHeight);
-            meteoriteContain.add(meteoriteControl);
+            for (CreateMeteorite getMeteorite : meteoriteContain) {
+                this.thread = new MeteoriteThread(getMeteorite, parentWidth, parentHeight, meteoriteContain,
+                        globalOption);
+            }
 
-            meteoriteControl.start();
+            this.thread.start();
 
             this.add(meteorite);
         }
@@ -40,6 +50,17 @@ public class MeteoriteZone extends JPanel implements MouseListener, MouseMotionL
         addMouseListener(this);
         addMouseMotionListener(this);
         repaint();
+    }
+
+    // Contain
+    // public List<MeteoriteThread> getThreadContain() {
+    // return this.meteoriteControls;
+
+    // }
+
+    public List<CreateMeteorite> getMeteoriteContain() {
+        return this.meteoriteContain;
+
     }
 
     // @Override
@@ -53,6 +74,7 @@ public class MeteoriteZone extends JPanel implements MouseListener, MouseMotionL
 
     @Override
     public void mousePressed(MouseEvent e) {
+        new PlaySounds("laser-gun.wav");
     }
 
     @Override

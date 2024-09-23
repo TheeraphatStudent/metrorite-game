@@ -4,7 +4,7 @@ import java.awt.Color;
 
 abstract class ColorConfigProps {
     public Color primary() {
-        return new Color(255, 250, 50);
+        return new Color(24, 30, 20);
     }
 }
 
