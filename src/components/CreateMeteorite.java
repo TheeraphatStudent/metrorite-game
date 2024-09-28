@@ -25,7 +25,7 @@ public class CreateMeteorite extends JPanel {
 
     private int meteoriteImagesNumbers = 10;
     private Image meteoriteImage;
-    private Image bombMeteoriteImage = new LoadedContent().loadImage("bomb.gif");
+    // private Image bombMeteoriteImage = new LoadedContent().loadImage("bomb.gif");
 
     public CreateMeteorite() {
         this.setSize(new Dimension(WIDTH, HEIGHT));
@@ -34,6 +34,7 @@ public class CreateMeteorite extends JPanel {
         this.setOpaque(false);
 
         int usage = (int) (Math.random() * meteoriteImagesNumbers) + 1;
+        // this.meteoriteImage = new LoadedContent().loadImage(usage + ".png");
         this.meteoriteImage = new LoadedContent().loadImage(usage + ".png");
 
         this.setSize(new Dimension(WIDTH, HEIGHT));
@@ -99,7 +100,7 @@ public class CreateMeteorite extends JPanel {
                 if (!this.isDestroy) {
                     new PlaySounds("bomb.wav");
 
-                    g.drawImage(this.bombMeteoriteImage, 0, 0, getWidth(), getHeight(), this);
+                    g.drawImage(new LoadedContent().loadImage("bomb.gif"), 0, 0, getWidth(), getHeight(), this);
                     // Thread.sleep(500);
                     this.destroyMeteorite();
 
