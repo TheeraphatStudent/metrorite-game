@@ -14,43 +14,46 @@ public class UseGlobal {
 
         for (Map.Entry<String, Double> items : this.optionsContain.entrySet()) {
             String key = items.getKey();
-            double value = 0;
-            boolean validInput = false;
+            if (!(key.equals("Width") || key.equals("Height"))) {
+                double value = 0;
+                boolean validInput = false;
 
-            while (!validInput) {
-                System.out.printf("%s: ", key);
-                String choose = scan.nextLine();
+                while (!validInput) {
+                    System.out.printf("%s: ", key);
+                    String choose = scan.nextLine();
 
-                try {
-                    value = Double.parseDouble(choose);
+                    try {
+                        value = Double.parseDouble(choose);
 
-                    if ((key.equals("Width") || key.equals("Height")) && value < 250) {
-                        System.out.println("Minimum screen size is 250x250px");
-                        continue;
-                    }
+                        // if ((key.equals("Width") || key.equals("Height")) && value < 250) {
+                        // System.out.println("Minimum screen size is 250x250px");
+                        // continue;
+                        // }
 
-                    if (key.equals("Meteorites") && value < 1) {
-                        System.out.println("Minimum meteorite is 1");
-                        continue;
-                    }
-
-                    if (key.equals("Speed")) {
-                        value += .75;
-                        if (value < 1.5) {
-                            System.out.println("Minimum speed is 1");
+                        if (key.equals("Meteorites") && value < 1) {
+                            System.out.println("Minimum meteorite is 1");
                             continue;
-
                         }
+
+                        if (key.equals("Speed")) {
+                            value += .75;
+                            if (value < 1.5) {
+                                System.out.println("Minimum speed is 1");
+                                continue;
+
+                            }
+                        }
+
+                        validInput = true;
+
+                    } catch (NumberFormatException e) {
+                        System.out.println("Input Number Only!\n");
                     }
-
-                    validInput = true;
-
-                } catch (NumberFormatException e) {
-                    System.out.println("Input Number Only!\n");
                 }
-            }
 
-            this.optionsContain.put(key, value);
+                this.optionsContain.put(key, value);
+
+            }
         }
 
         System.out.println("========== Game Start! ==========");
@@ -58,8 +61,8 @@ public class UseGlobal {
 
     private LinkedHashMap<String, Double> optionsContain = new LinkedHashMap<String, Double>() {
         {
-            put("Width", 250d);
-            put("Height", 250d);
+            put("Width", 500d);
+            put("Height", 500d);
             put("Meteorites", 1d);
             put("Speed", 1.5d);
         }
