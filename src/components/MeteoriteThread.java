@@ -145,17 +145,20 @@ public class MeteoriteThread extends Thread {
                     }
                 }
 
+                double randomizeSpeed = ((Math.random() * (this.MAX_SPEED - this.MAX_COLLISIONS)) - this.speed) + 0.2;
+                System.out.println("Rand Speed: " + randomizeSpeed);
+
                 // Reverse direction
                 if (x + width > (parentWidth - (width / 2.75)) || x < 0) {
-                    dx = -dx;
+                    dx = -dx * randomizeSpeed;
                     this.xCollisionCount++;
 
                 } else {
                     this.xCollisionCount = 0;
                 }
 
-                if (y + height > (parentHeight - (height / 2.4)) || y < 0) {
-                    dy = -dy;
+                if (y + height > (parentHeight - (height / 2.5)) || y < 0) {
+                    dy = -dy * randomizeSpeed;
                     this.yCollisionCount++;
 
                 } else {
@@ -166,16 +169,13 @@ public class MeteoriteThread extends Thread {
                 if (this.xCollisionCount >= MAX_COLLISIONS || this.yCollisionCount >= MAX_COLLISIONS) {
                     changeToDiagonal();
                     randomizeSpeed();
+                    handleCollision(this.meteoriteRef);
 
                 }
 
                 // Update meteorite position
                 this.meteoriteRef.setBounds(x, y, width, height);
                 this.meteoriteRef.repaint();
-
-                System.out.println(xCollisionCount);
-                System.out.println(yCollisionCount);
-                System.out.println("======================\n");
 
                 Thread.sleep(20);
             } catch (Exception e) {
